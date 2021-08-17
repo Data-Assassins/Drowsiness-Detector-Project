@@ -56,16 +56,20 @@
 ## Git Process
 
 - What components of your project will live on GitHub?
+
+- We created a project Repository and shared it on GitHub and we cloned it on our individual devices to start the work, each one of us will use a branch to work on it, we will push our work on the branch then make pull request to our work every day in the next morning and discuss it with the team leader before merge, we will continue this till we finish the whole project and then push to the main.
+
+
 - How will you share the repository with your teammates?
- - using organization privilage on github.
+   - using organization privilage on github.
 - What is your Git flow?
- - Git checkout from the branch to the main branch then git pull the latest updates on the main then git checkout to the branch and merge the main with it then after resolving any conflict , git push the changes from the branch and making a pull request.
+   - Git checkout from the branch to the main branch then git pull the latest updates on the main then git checkout to the branch and merge the main with it then after resolving any conflict , git push the changes from the branch and making a pull request.
 - Will you be using a PR review workflow? If so, consider:
         How many people must review a PR?
-        - Two at least one of them is the group leader.
+    - Two at least one of them is the group leader.
         Who merges PRs?
-        - Only the leader
+    - Only the leader
         How often will you merge?
-        - At the end of each day.
+    - At the end of each day.
         How will you communicate that it’s time to merge?
-        - Using slack and predefined time.
+    - Using slack and predefined time.
