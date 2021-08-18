@@ -70,7 +70,7 @@
 ## **Git Process:**
 
 - **What components of your project will live on GitHub?**
-  - put answer here
+  - It's not clear yet which component should be live on Github.
 - **How will you share the repository with your teammates?**
   - using organization privilege on github.
 - **What is your Git flow?**
