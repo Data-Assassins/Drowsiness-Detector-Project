@@ -74,7 +74,8 @@
 - **How will you share the repository with your teammates?**
   - using organization privilege on github.
 - **What is your Git flow?**
-  - Git checkout from the branch to the main branch then git pull the latest updates on the main then git checkout to the branch and merge the main with it then after resolving any conflict , git push the changes from the branch and making a pull request.
+  - Feature Branch Workflow 
+ 
 - **Will you be using a PR review workflow? If so, consider:**
   - **How many people must review a PR?**
     - Two at least one of them is the group leader.
