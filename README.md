@@ -16,3 +16,11 @@
 
 - Python Programming Language
 - YOLO ( you only look once) deep learning models
+
+## MVP:
+
+- Face Recognition.
+
+- Sleepy Face Detection
+
+- Sending a Report.
