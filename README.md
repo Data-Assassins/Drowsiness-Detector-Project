@@ -4,7 +4,7 @@
 
 ## Project Description
 
-## Name of project 
+## Name of project
 
 ## Drowsiness Detection
 
@@ -21,7 +21,7 @@
 - Python Programming Language
 - YOLO ( you only look once) deep learning models
 - OpenCv --> Library for Eye detection
-- Numpy and Matplotlib  --> Library  for plotting and visualizing data
+- Numpy and Matplotlib --> Library for plotting and visualizing data
 - Dlib , Pygame --> which will alert the driver when he feels sleepy
 - Flask --> for predection
 
@@ -29,9 +29,9 @@
 
 - Face Recognition(find the facial landmarks such as eyes).
 
-- Sleepy Face Detection(Eye Blink detection using  Eye Aspect Ratio(EAR))
+- Sleepy Face Detection(Eye Blink detection using Eye Aspect Ratio(EAR))
 
-- Do predection for Eyes if they are closed  or opened.
+- Do predection for Eyes if they are closed or opened.
 
 - Sending a Report.
 
@@ -43,8 +43,8 @@
 
 ## Feature tasks
 
-- Face detection 
-- Drowsiness Detection 
+- Face detection
+- Drowsiness Detection
 - Storing the results
 
 ## Acceptance tasks:
@@ -71,7 +71,7 @@
 - Ensure that all reports generated in specific time period are stored properly.
 - Ensure that in case the client filtered the options by label only the reports related are shown.
 
-## Estimation 
+## Estimation
 
 - Medium
 
@@ -89,11 +89,9 @@
 
 - small
 
-
-
 ## As an administrative user I want an alarm message to be shown to the employee to warn them
 
- ## Feature tasks:
+## Feature tasks:
 
 - The non-administrative user recieve a an alarm message.
 
@@ -105,10 +103,9 @@
 
 - Large.
 
-
 ## As non administrative user I want an email to be send to me in case the employee was sleepy.
 
- ## Feature tasks
+## Feature tasks
 
 - The administrative user recieve an email when the report is sleepy.
 
@@ -124,9 +121,13 @@
 - Large.
 
 
-## Working Flow
+## Domain Modeling
 
-![Workflow](work_flow/workingflow.png)
+![UML](Images/UML.png)
+
+## Wireframe
+
+![wireframe](Images/wireframe.jpg)
 
 ## Instulation
 
