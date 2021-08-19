@@ -12,16 +12,24 @@
 
 - So, it can be used as a safety technology to prevent human errors that consider critical for example in medical institutions when humman errors of sleepy doctors are fatal.
 
+# Getting started:
+
 ## Dependencies, Languages and Tools expected to be needed:
 
 - Python Programming Language
 - YOLO ( you only look once) deep learning models
+- OpenCv --> Library for Eye detection
+- Numpy and Matplotlib  --> Library  for plotting and visualizing data
+- Dlib , Pygame --> which will alert the driver when he feels sleepy
+- Flask --> for predection
 
 ## MVP:
 
-- Face Recognition.
+- Face Recognition(find the facial landmarks such as eyes).
 
-- Sleepy Face Detection
+- Sleepy Face Detection(Eye Blink detection using  Eye Aspect Ratio(EAR))
+
+- Do predection for Eyes if they are closed  or opened.
 
 - Sending a Report.
 
@@ -110,4 +118,26 @@ Ensure the email recipent is the client address.
 ## Estimation:
 
 - Large.
+- Generate alert.
+
+## Instulation:
+
+Installing YOLO
+`pip3 install yolo34py`
+
+Installing Numpy
+`pip3 install numpy` 
+
+Installing Matplotlib
+`pip3 install matplotlib`
+
+Installing OpenCV
+`pip3 install opencv-python`
+
+Installing Dlib
+`conda install -c conda-forge dlib`
+
+Installing Pygame
+`pip3 install pygame`
+
 
