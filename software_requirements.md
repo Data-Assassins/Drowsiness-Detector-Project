@@ -29,8 +29,12 @@
 
 - Sleepy Face Detection
 
-- Sending a Report.
+- Sending an email to the superviser.
+
+- Sending an alarm to the sleepy user 
 
 # What are your stretch goals?
+
+- Adding an extra service for doing data analysis for the reports generated to make decisions based on it like adjusting an employee behavior or relating any events occured in the period to the occurence of drowsiness.
  
-- Registering the date and time of the sleepness incidence and collect the patients data -if in medical institution- or clients data that's related (signitured by his/her name in the database ) to the sleepy person from the company database. 
+- Registering the date and time of the sleepness incidence and adding extra option for collecting the patients data -if in medical institution- or clients data that's related (signitured by his/her name in the database ) to the sleepy person from the company database. 
