@@ -1,8 +1,8 @@
-# Group Members :
+# Group Members
 
 - Ali Rahhal ,Saadoun M Aldhirat ,Mahmood Dinah ,Haya Balasmeh and Roaa Mustafa
 
-# Project Description:
+## Project Description
 
 ## Name of project : Drowsiness Detection
 
@@ -12,9 +12,9 @@
 
 - So, it can be used as a safety technology to prevent human errors that consider critical for example in medical institutions when humman errors of sleepy doctors are fatal.
 
-# Getting started:
+## Getting started
 
-## Dependencies, Languages and Tools expected to be needed:
+## Dependencies, Languages and Tools expected to be needed
 
 - Python Programming Language
 - YOLO ( you only look once) deep learning models
@@ -23,7 +23,7 @@
 - Dlib , Pygame --> which will alert the driver when he feels sleepy
 - Flask --> for predection
 
-## MVP:
+## MVP
 
 - Face Recognition(find the facial landmarks such as eyes).
 
@@ -35,13 +35,17 @@
 
 - Generate alert.
 
-## Instulation:
+## Working Flow
+
+![Workflow](work_flow/workingflow.png)
+
+## Instulation
 
 Installing YOLO
 `pip3 install yolo34py`
 
 Installing Numpy
-`pip3 install numpy` 
+`pip3 install numpy`
 
 Installing Matplotlib
 `pip3 install matplotlib`
@@ -50,9 +54,7 @@ Installing OpenCV
 `pip3 install opencv-python`
 
 Installing Dlib
-`conda install -c conda-forge dlib`
+`pip3 install dlib`
 
 Installing Pygame
 `pip3 install pygame`
-
-
