@@ -13,24 +13,28 @@
 
 - The amount of human errors with the main cause of lacking of full consciousness are high and by reducing this type of errors could prevent financial and human casualities .
 
-# Scope (In/Out)
+## Scope (In/Out)
 
- - IN:
- - The application will detect the facial expressions of sleepness by first detection of human face.
- - It will send an alarm to the sleepy person.
- - It will send an informtion to the person who is responsible according to the institution workflow and database.
+- IN:
+- The application will detect the facial expressions of sleepness by first detection of human face.
+- It will send an alarm to the sleepy person.
+- It will send an informtion to the person who is responsible according to the institution workflow and database.
 
- - OUT:
- - The application will be turn into an IOS or Android app only web appliaction.
+- OUT:
+- The application will be turn into an IOS or Android app only web appliaction.
 
-# Minimum Viable Product 
+## Minimum Viable Product 
 
 - Face Recognition.
 
 - Sleepy Face Detection
 
-- Sending a Report.
+- Sending an email to the superviser.
 
-# What are your stretch goals?
+- Sending an alarm to the sleepy user 
+
+## What are your stretch goals?
+
+- Adding an extra service for doing data analysis for the reports generated to make decisions based on it like adjusting an employee behavior or relating any events occured in the period to the occurence of drowsiness.
  
-- Registering the date and time of the sleepness incidence and collect the patients data -if in medical institution- or clients data that's related (signitured by his/her name in the database ) to the sleepy person from the company database. 
+- Registering the date and time of the sleepness incidence and adding extra option for collecting the patients data -if in medical institution- or clients data that's related (signitured by his/her name in the database ) to the sleepy person from the company database. 
