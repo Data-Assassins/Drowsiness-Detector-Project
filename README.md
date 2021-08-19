@@ -16,7 +16,7 @@
 
 ## Getting started
 
-## Dependencies, Languages and Tools expected to be needed:
+## Dependencies, Languages and Tools expected to be needed
 
 - Python Programming Language
 - YOLO ( you only look once) deep learning models
@@ -122,13 +122,17 @@
 - Large.
 - Generate alert.
 
+## Working Flow
+
+![Workflow](work_flow/workingflow.png)
+
 ## Instulation
 
 Installing YOLO
 `pip3 install yolo34py`
 
 Installing Numpy
-`pip3 install numpy` 
+`pip3 install numpy`
 
 Installing Matplotlib
 `pip3 install matplotlib`
@@ -137,9 +141,7 @@ Installing OpenCV
 `pip3 install opencv-python`
 
 Installing Dlib
-`conda install -c conda-forge dlib`
+`pip3 install dlib`
 
 Installing Pygame
 `pip3 install pygame`
-
-
