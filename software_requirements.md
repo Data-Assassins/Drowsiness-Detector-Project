@@ -38,3 +38,9 @@
 - Adding an extra service for doing data analysis for the reports generated to make decisions based on it like adjusting an employee behavior or relating any events occured in the period to the occurence of drowsiness.
  
 - Registering the date and time of the sleepness incidence and adding extra option for collecting the patients data -if in medical institution- or clients data that's related (signitured by his/her name in the database ) to the sleepy person from the company database. 
+
+## Non-Functional Requirements
+
+ - Data Integrity: Our project deals with the integrity and consistency of data in the application. By storing the data in a secure database which can only be accessed by the application administrator
+ 
+ - Testability: Our project will be testable, each function will be tested on its own once it's finished and make sure its work properly, After that, the project will be fully tested and made sure it's ready to use
