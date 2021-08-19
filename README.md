@@ -37,6 +37,8 @@
 
 ## User stories
 
+[user stories](https://github.com/orgs/Data-Assassins/projects/1)
+
 ## As an administrative user I want to generate reports stating if the employee setting on the computer is awake or sleepy every 10 seconds.
 
 ## Feature tasks
@@ -120,7 +122,7 @@
 ## Estimation
 
 - Large.
-- Generate alert.
+
 
 ## Working Flow
 
