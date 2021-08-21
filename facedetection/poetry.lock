@@ -40,6 +40,14 @@ python-versions = "*"
 six = "*"
 
 [[package]]
+name = "dlib"
+version = "19.22.1"
+description = "A toolkit for making real world machine learning and data analysis applications"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "imageio"
 version = "2.9.0"
 description = "Library for reading and writing a wide range of image, video, scientific, and volumetric data formats."
@@ -282,7 +290,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "0cdcb0c985ea3ed768a0afe99b0735ee454bc168e9ae05cfb60902407d2bfe33"
+content-hash = "33d400f406a65482c0a8c45de71db57d3b4a598bc8b0b58a5a9b1a9a1ca4acc0"
 
 [metadata.files]
 atomicwrites = [
@@ -300,6 +308,9 @@ colorama = [
 cycler = [
     {file = "cycler-0.10.0-py2.py3-none-any.whl", hash = "sha256:1d8a5ae1ff6c5cf9b93e8811e581232ad8920aeec647c37316ceac982b08cb2d"},
     {file = "cycler-0.10.0.tar.gz", hash = "sha256:cd7b2d1018258d7247a71425e9f26463dfb444d411c39569972f4ce586b0c9d8"},
+]
+dlib = [
+    {file = "dlib-19.22.1.tar.gz", hash = "sha256:77e943b40cc53e377d7fc683552d2337937f1111c46d7753105f594c3958163c"},
 ]
 imageio = [
     {file = "imageio-2.9.0-py3-none-any.whl", hash = "sha256:3604d751f03002e8e0e7650aa71d8d9148144a87daf17cb1f3228e80747f2e6b"},
