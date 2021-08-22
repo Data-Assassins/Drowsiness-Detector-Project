@@ -5,7 +5,7 @@ import dlib
 import face_recognition
 import os
 
-# Face detection using image as input
+# Face detection using image as input, Real Time detection
 # First Step: Loading the known images files 
 
 path = 'fd_database'
@@ -56,38 +56,40 @@ def encoded_known_list(images):
 encodeListKnown = encoded_known_list(employee_images)
 
 
-# Getting the encodings for the unknown faces
-cap = cv2.VideoCapture(0)
-# test_encoded = face_recog(tom_test)[0] 
-# while cap.isOpened():
-#     success, img = cap.read()
-#     imgS = cv2.resize(img,(0,0),None,0.25,0.25) 
-#     if cv2.waitKey(10) & 0xFF == ord('q'):
-#         break
-# cap.release()
-# cv2.destroyAllWindows()
+
+
 
 def face_comparison(train_encode,test_encode):
     # Fourth step: Comaring between the the test image and train image measurements
     results = face_recognition.compare_faces([train_encode],test_encode)
     return results
+# Getting the encodings for the unknown faces
+cap = cv2.VideoCapture(0)
 
-# Comparing the faces
-results = face_comparison(train_encoded,test_encoded)
-
-
-# Getting the face distance
-faceDis = face_recognition.face_distance([train_encoded],test_encoded)
-
-# The results can be True or False , matched or mismatched 
-print(results,faceDis)
-
-cv2.putText(tom_test,f'{results} {round(faceDis[0],2)}',(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,0,255),2)
+while True:
+    success, img = cap.read()
+    imgS = cv2.resize(img,(0,0),None,0.25,0.25) 
+    test_encoded = face_recog(imgS)[0] 
+    # Comparing the faces
+    results = face_comparison(encodeListKnown,test_encoded)
+    
 
 
-# To show the images
 
-cv2.imshow('Tom Test',face_recog(tom_test)[1])
+    # Getting the face distance
+    faceDis = face_recognition.face_distance([train_encoded],test_encoded)
 
-# The time lag 
-cv2.waitKey(0)
+    # The results can be True or False , matched or mismatched 
+    print(results,faceDis)
+
+    cv2.putText(tom_test,f'{results} {round(faceDis[0],2)}',(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,0,255),2)
+
+
+    # To show the images
+
+    cv2.imshow('Tom Test',face_recog(tom_test)[1])
+
+    # The time lag 
+    cv2.waitKey(0)
+    if cv2.waitKey(10) & 0xFF == ord('q'):
+        break
