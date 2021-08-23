@@ -25,3 +25,19 @@ def test_ear():
 #     if eye_ear < EYE_THRESHOLD:
 #         assert ALARAM            
 
+def test_detect_left_eye():
+        rects = detector(gray, 0)
+        for rect in rects:
+            shape = predictor(gray, rect)
+            shape = face_utils.shape_to_np(shape)
+            leftEye = shape[left_Start:left_End]
+        assert  leftEye.any()
+
+
+def test_detect_right_eye():
+        rects = detector(gray, 0)
+        for rect in rects:
+            shape = predictor(gray, rect)
+            shape = face_utils.shape_to_np(shape)
+            rightEye = shape[right_Start:right_End]
+        assert rightEye.any()
