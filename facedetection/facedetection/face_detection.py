@@ -1,3 +1,4 @@
+from facedetection.send_emails import send_mail_test
 import cv2
 import numpy as np
 import face_recognition
@@ -8,7 +9,7 @@ import time
 # Face detection in Real Time detection
 # First Step: Loading the known images files 
  
-path = 'fd_database'
+path = '../fd_database'
 employee_images = []
 employee_names = []
 images_list = os.listdir(path)
@@ -42,8 +43,8 @@ def detection_real_time():
     # flag=True
     while cap.isOpened():
         success, img = cap.read()
-        #img = captureScreen()
-     
+    
+        #img = captureScreen() 
         imgS = cv2.resize(img,(0,0),None,0.25,0.25)
         imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
         # The Second Step: Get the face location fpr each face in each image. 
@@ -72,13 +73,14 @@ def detection_real_time():
                         counter=0
             else:
                 print(results[matchIndex])
+                # send_mail_test(imgS)
         # To show the images            
         cv2.imshow('Face Recognition',img)
         # The time lag 
         cv2.waitKey(1) 
         
-        if success == True:
-            time.sleep(0)
+        # if success == True:
+    # time.sleep(0)
     cap.release()
 
 if __name__== '__main__':
