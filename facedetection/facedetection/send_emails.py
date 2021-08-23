@@ -1,15 +1,15 @@
 import smtplib
 import imghdr
 from email.message import EmailMessage
-def send_email(img):
+def send_email(img,msg):
     Sender_Email = "saaddhirat@gmail.com"
     Reciever_Email = "arahal81@gmail.com"
     Password = 'saad2441993'
     newMessage = EmailMessage()                         
-    newMessage['Subject'] = "Check out the new logo" 
+    newMessage['Subject'] = "‪Drowsiness Detector Status" 
     newMessage['From'] = Sender_Email                   
     newMessage['To'] = Reciever_Email                   
-    newMessage.set_content('There is Unauthorised access!') 
+    newMessage.set_content(msg) 
     with open(img, 'rb') as f:
         image_data = f.read()
         image_type = imghdr.what(f.name)
