@@ -229,6 +229,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
+name = "pyglet"
+version = "1.5.19"
+description = "Cross-platform windowing and multimedia library"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pyparsing"
 version = "2.4.7"
 description = "Python parsing module"
@@ -348,7 +356,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "233ed096e4f132379d0142db8f97e7856327db5daf1473c167479fb890dfff84"
+content-hash = "9762d3055429089248027bd31b8de1fc8674da55e4eea519e4276fed7db4b861"
 
 [metadata.files]
 argparse = [
@@ -568,6 +576,10 @@ pluggy = [
 py = [
     {file = "py-1.10.0-py2.py3-none-any.whl", hash = "sha256:3b80836aa6d1feeaa108e046da6423ab8f6ceda6468545ae8d02d9d58d18818a"},
     {file = "py-1.10.0.tar.gz", hash = "sha256:21b81bda15b66ef5e1a777a21c4dcd9c20ad3efd0b3f817e7a809035269e1bd3"},
+]
+pyglet = [
+    {file = "pyglet-1.5.19-py3-none-any.whl", hash = "sha256:6e1eede7a7c0fd3606b14bc241b51915d4453e4a6a6a0e8a6a080842f767662d"},
+    {file = "pyglet-1.5.19.zip", hash = "sha256:fe4ba1d916e8596a0eb38297d0fca1365620288f2ad92ca25af309be9ae0ffcc"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
