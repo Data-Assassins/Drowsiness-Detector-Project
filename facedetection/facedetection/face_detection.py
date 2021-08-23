@@ -1,95 +1,83 @@
 import cv2
 import numpy as np
-import scipy
-import dlib
 import face_recognition
 import os
+from datetime import datetime
+import time
 
 # Face detection using image as input, Real Time detection
 # First Step: Loading the known images files 
-
+ 
 path = 'fd_database'
 employee_images = []
 employee_names = []
 images_list = os.listdir(path)
+print(images_list)
+for cl in images_list:
+    curImg = cv2.imread(f'{path}/{cl}')
+    employee_images.append(curImg)
+    employee_names.append(os.path.splitext(cl)[0])
+print(employee_names)
 
-for image_path in images_list:
-    current_image=  cv2.imread(f'{path}/{image_path}')
-    employee_images.append(current_image)
-    employee_names.append(os.path.splitext(image_path)[0])
-
-
-# tom_image = face_recognition.load_image_file('fd_database/Tom-Cruise-1.jpg')
-# tom_test = face_recognition.load_image_file('fd_database/leonardo-dicaprio11.jpg')
-
-def face_recog(image):
-
-    # The detection works only on grayscale images
-    image = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
-
-    # The Second Step: Get the face location fpr each face in each image. 
-
-
-    faceLoc = face_recognition.face_locations(image)[0]
-    # index zero because we can have multiple faces in one image but we want only the face location for the first one
-    # (top,right,bottom,left)
-
-    # The Third step: Get the face encodings,for each face in each image file . 
-    encod_image = face_recognition.face_encodings(image)[0]
-    cv2.rectangle(image,(faceLoc[3],faceLoc[0]),(faceLoc[1],faceLoc[2]),(255,0,255),2)
-    
-
-
-    return [encod_image,image]
-    
-
-
-# Getting the encodings for the known faces
-def encoded_known_list(images):
-    encoded_known_employees = []
-    for image in images:
-
-        result = face_recog(image)[0] 
-        encoded_known_employees.append(result)
-    return encoded_known_employees
-
-encodeListKnown = encoded_known_list(employee_images)
-
-
-
-
+# Getting the encodings for the known faces 
+def findEncodings(images):
+    encodeList = []
+    for img in images:
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        encode = face_recognition.face_encodings(img)[0]
+        encodeList.append(encode)
+    return encodeList
+ 
 
 def face_comparison(train_encode,test_encode):
     # Fourth step: Comaring between the the test image and train image measurements
-    results = face_recognition.compare_faces([train_encode],test_encode)
+    results = face_recognition.compare_faces(train_encode,test_encode)
     return results
-# Getting the encodings for the unknown faces
-cap = cv2.VideoCapture(0)
+def detection_real_time():
+    Keyboard=KeyboardInterrupt()
+    encodeListKnown = findEncodings(employee_images)
+    print('Encoding Complete')
+    cap = cv2.VideoCapture(0)
+    counter=0
+    # flag=True
+    while cap.isOpened():
+        success, img = cap.read()
+        #img = captureScreen()
+     
+        imgS = cv2.resize(img,(0,0),None,0.25,0.25)
+        imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
+        # The Second Step: Get the face location fpr each face in each image. 
+        facesCurFrame = face_recognition.face_locations(imgS)
+        encodesCurFrame = face_recognition.face_encodings(imgS,facesCurFrame)
+         # The Third step: Get the face encodings,for each face in each image file . 
+        for encodeFace,faceLoc in zip(encodesCurFrame,facesCurFrame):
+            results = face_comparison(encodeListKnown,encodeFace)
+            face_dis = face_recognition.face_distance(encodeListKnown,encodeFace)
+            #print(faceDis)
+            matchIndex = np.argmin(face_dis)
 
-while True:
-    success, img = cap.read()
-    imgS = cv2.resize(img,(0,0),None,0.25,0.25) 
-    test_encoded = face_recog(imgS)[0] 
-    # Comparing the faces
-    results = face_comparison(encodeListKnown,test_encoded)
-    
-
-
-
-    # Getting the face distance
-    faceDis = face_recognition.face_distance([train_encoded],test_encoded)
-
-    # The results can be True or False , matched or mismatched 
-    print(results,faceDis)
-
-    cv2.putText(tom_test,f'{results} {round(faceDis[0],2)}',(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,0,255),2)
-
-
-    # To show the images
-
-    cv2.imshow('Tom Test',face_recog(tom_test)[1])
-
-    # The time lag 
-    cv2.waitKey(0)
-    if cv2.waitKey(10) & 0xFF == ord('q'):
-        break
+            if results[matchIndex]:
+                name = employee_names[matchIndex].upper()
+                #print(name)
+                y1,x2,y2,x1 = faceLoc
+                y1, x2, y2, x1 = y1*4,x2*4,y2*4,x1*4
+                cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
+                cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
+                cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+                print("Hi",name)
+                if True:
+                    counter+=1
+                    if counter==8:
+                        print("Email")
+                        counter=0
+            else:
+                print(results[matchIndex])
+        # To show the images            
+        cv2.imshow('Face Recognition',img)
+        # The time lag 
+        cv2.waitKey(1) 
+        
+        # if success == True:
+        #     time.sleep(0)
+    cap.release()
+detection_real_time()
