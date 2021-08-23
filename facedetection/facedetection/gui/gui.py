@@ -11,7 +11,7 @@ database={'admin': '1234', 'haya': '1234', 'ali': '1234'}
 class mainWindow(QDialog):
     def __init__(self):
         super(mainWindow, self).__init__()
-        loadUi('gui/guiHome.ui', self)
+        loadUi('facedetection/gui/guiHome.ui', self)
         self.setWindowTitle("Main Window")
         self.login.clicked.connect(self.login_clicked)
         self.signup.clicked.connect(self.signup_clicked)
@@ -36,7 +36,7 @@ class mainWindow(QDialog):
 class loginWindow(QDialog):
     def __init__(self):
         super(loginWindow, self).__init__()
-        loadUi('gui/guiLogin.ui', self)
+        loadUi('facedetection/gui/guiLogin.ui', self)
         self.setWindowTitle("Login")
         # self.login.clicked.connect(self.login_clicked)
         self.passwordfield.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -75,7 +75,7 @@ class loginWindow(QDialog):
 class signupWindow(QDialog):
     def __init__(self):
         super(signupWindow, self).__init__()
-        loadUi('gui/guiSignup.ui', self)
+        loadUi('facedetection/gui/guiSignup.ui', self)
         self.setWindowTitle("Signup")
         self.signup.clicked.connect(self.signup_function)
         self.backbutton.clicked.connect(self.back_button_function)
@@ -122,7 +122,7 @@ class signupWindow(QDialog):
 class userWindow(QDialog):
     def __init__(self):
         super(userWindow, self).__init__()
-        loadUi('gui/guiUser.ui', self)
+        loadUi('facedetection/gui/guiUser.ui', self)
         self.setWindowTitle("User")
         self.start.clicked.connect(self.start_project_function) 
         self.report.clicked.connect(self.report_function) 
@@ -149,7 +149,7 @@ class userWindow(QDialog):
 class reportWindow(QDialog):
     def __init__(self):
         super(reportWindow, self).__init__()
-        loadUi('gui/guiReport.ui', self)
+        loadUi('facedetection/gui/guiReport.ui', self)
         self.setWindowTitle("Report")
         self.backbutton.clicked.connect(self.back_button_function)
 
