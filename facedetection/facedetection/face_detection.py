@@ -9,7 +9,7 @@ import time
 # Face detection using image as input, Real Time detection
 # First Step: Loading the known images files 
  
-path = 'fd_database'
+path = '../fd_database'
 employee_images = []
 employee_names = []
 images_list = os.listdir(path)
