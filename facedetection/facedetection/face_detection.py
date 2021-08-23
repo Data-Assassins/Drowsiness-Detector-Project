@@ -6,19 +6,19 @@ import os
 from datetime import datetime
 import time
 
-# Face detection using image as input, Real Time detection
+# Face detection in Real Time detection
 # First Step: Loading the known images files 
  
 path = '../fd_database'
 employee_images = []
 employee_names = []
 images_list = os.listdir(path)
-print(images_list)
+# print(images_list)
 for cl in images_list:
     curImg = cv2.imread(f'{path}/{cl}')
     employee_images.append(curImg)
     employee_names.append(os.path.splitext(cl)[0])
-print(employee_names)
+# print(employee_names)
 
 # Getting the encodings for the known faces 
 def findEncodings(images):
@@ -28,12 +28,12 @@ def findEncodings(images):
         encode = face_recognition.face_encodings(img)[0]
         encodeList.append(encode)
     return encodeList
- 
 
 def face_comparison(train_encode,test_encode):
     # Fourth step: Comaring between the the test image and train image measurements
     results = face_recognition.compare_faces(train_encode,test_encode)
     return results
+print(face_comparison([findEncodings(employee_images)[0]],findEncodings(employee_images)[0]))
 def detection_real_time():
     Keyboard=KeyboardInterrupt()
     encodeListKnown = findEncodings(employee_images)
@@ -82,4 +82,7 @@ def detection_real_time():
         # if success == True:
     # time.sleep(0)
     cap.release()
-detection_real_time()
+
+if __name__== '__main__':
+
+   detection_real_time()
