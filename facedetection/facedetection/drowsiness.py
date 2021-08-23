@@ -81,12 +81,17 @@ while True:
                     cv2.putText(frame, f"sleep times={sleep_times}", (100,70),cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
             else:
                             COUNTER = 0
-                            ALARAM = False             
+                            ALARAM = False  
             cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         cv2.imshow("Frame", frame)
         key = cv2.waitKey(1) & 0xFF    
         if key == ord("q"):  
             break     
 
-cv2.destroyAllWindows()
-vs.stop()                 
+# cv2.destroyAllWindows()
+# vs.stop()                 
+if __name__ == "__main__":
+    vs = VideoStream(src=args["webcam"]).start()
+    cv2.destroyAllWindows()
+    vs.stop()
+    # sound_alarm("alarm.wav")
