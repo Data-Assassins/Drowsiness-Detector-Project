@@ -32,7 +32,7 @@ ap.add_argument("-a", "--alarm", type=int, default=0,
 args = vars(ap.parse_args())
 
 EYE_THRESHOLD = 0.3
-EYE_CONSEC_FRAMES = 48
+EYE_CONSEC_FRAMES = 20
 
 COUNTER = 0
 ALARAM = False
@@ -87,7 +87,8 @@ while True:
         key = cv2.waitKey(1) & 0xFF    
         if key == ord("q"):  
             break     
-
+        
+				#print ("Drowsy")
 # cv2.destroyAllWindows()
 # vs.stop()                 
 if __name__ == "__main__":
