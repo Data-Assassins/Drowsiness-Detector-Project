@@ -1,16 +1,20 @@
 import sys
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPalette
-from PyQt5.QtWidgets import QApplication, QPushButton,QDialog
-from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt , QThread, pyqtSignal, pyqtSlot
+from PyQt5.QtGui import QPalette, QPixmap 
+from PyQt5.QtWidgets import QApplication, QWidget ,QDialog
+from PyQt5 import QtWidgets ,QtGui
 from PyQt5.uic import loadUi
+import cv2
+import numpy as np
 
-database={'admin': '1234', 'haya': '1234', 'ali': '1234'}
 
-class mainWindow(QDialog):
+database={'admin': '1234','saadoun':'1234', 'haya': '1234', 'ali': '1234'}
+
+# Home page 
+class homeWindow(QDialog):
     def __init__(self):
-        super(mainWindow, self).__init__()
+        super(homeWindow, self).__init__()
         loadUi('facedetection/gui/guiHome.ui', self)
         self.setWindowTitle("Main Window")
         self.login.clicked.connect(self.login_clicked)
@@ -32,7 +36,7 @@ class mainWindow(QDialog):
         widget.addWidget(signup)
         # to flip the screen to the signup
         widget.setCurrentIndex(widget.currentIndex() + 1)
-
+# Login page
 class loginWindow(QDialog):
     def __init__(self):
         super(loginWindow, self).__init__()
@@ -52,7 +56,7 @@ class loginWindow(QDialog):
         if username in database and database[username] == password:
             # if correct then show the main window
             print("Login Successful")
-            user = userWindow()
+            user = mainWindow()
             widget.addWidget(user)
             widget.setCurrentIndex(widget.currentIndex() + 1)
 
@@ -71,7 +75,7 @@ class loginWindow(QDialog):
         widget.setCurrentIndex(widget.currentIndex() - 1)
 
 
-# Create the signup class for the signup window
+# signup page 
 class signupWindow(QDialog):
     def __init__(self):
         super(signupWindow, self).__init__()
@@ -118,34 +122,8 @@ class signupWindow(QDialog):
         # to flip the screen to the main window
         widget.removeWidget(widget.currentWidget())
         widget.setCurrentIndex(widget.currentIndex() - 1)
-        
-class userWindow(QDialog):
-    def __init__(self):
-        super(userWindow, self).__init__()
-        loadUi('facedetection/gui/guiUser.ui', self)
-        self.setWindowTitle("User")
-        self.start.clicked.connect(self.start_project_function) 
-        self.report.clicked.connect(self.report_function) 
-        self.backbutton.clicked.connect(self.back_button_function)
-    # to handle the start button inside the user window
-    # Here is the start for our program what functionality is implemented here
-    def start_project_function(self):
-        # our code here
-        pass
 
-
-    # to handle the report button inside the user window
-    def report_function(self):
-        report = reportWindow()
-        widget.addWidget(report)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
-    # to handle the back button inside the signup window
-    def back_button_function(self):
-        # to flip the screen to the main window
-        widget.removeWidget(widget.currentWidget())
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-
+# report page       
 class reportWindow(QDialog):
     def __init__(self):
         super(reportWindow, self).__init__()
@@ -159,15 +137,119 @@ class reportWindow(QDialog):
         widget.removeWidget(widget.currentWidget())
         widget.setCurrentIndex(widget.currentIndex() - 1)
 
-# # main
-# app = QApplication(sys.argv)
-# home = mainWindow()
-# widget = QtWidgets.QStackedWidget()
-# widget.addWidget(home)
-# widget.setFixedHeight(800)
-# widget.setFixedWidth(1200)
-# widget.show()
-# try:
-#     sys.exit(app.exec_())
-# except:
-#     print("Exiting From The Application")
+############################################################################################
+###########################################  guitwo ########################################
+############################################################################################
+# Home page 
+class mainWindow(QDialog):
+    def __init__(self):
+        super(mainWindow, self).__init__()
+        loadUi('facedetection/gui/mainWindow.ui', self)
+        self.start.clicked.connect(self.start_clicked)
+        self.report.clicked.connect(self.report_function) 
+        self.backbutton.clicked.connect(self.back_button_function)
+    def start_clicked(self):
+        videoScreen = videoWindow()
+        widget.addWidget(videoScreen)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    # to handle the report button inside the user window
+    def report_function(self):
+        report = reportWindow()
+        widget.addWidget(report)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    # to handle the back button inside the signup window
+    def back_button_function(self):
+        # to flip the screen to the main window
+        widget.removeWidget(widget.currentWidget())
+        widget.setCurrentIndex(widget.currentIndex() - 1)
+
+# Cam page
+class videoWindow(QDialog):
+    def __init__(self):
+        super(videoWindow, self).__init__()
+        loadUi('facedetection/gui/videoWindow.ui', self)
+        self.backbutton.clicked.connect(self.back_button_function)
+        self.video = videoLabel(self.videoLabel)
+        self.video.run_thread(self.edited)
+        self.backbutton.clicked.connect(self.back_button_function)
+        
+    @pyqtSlot(np.ndarray,name="edited")
+    def edited(self,image):
+        self.video.update_image(image)
+
+    def back_button_function(self):
+    # to flip the screen to the main window
+        # self.camera.release()
+        widget.removeWidget(widget.currentWidget())
+        widget.setCurrentIndex(widget.currentIndex() - 1)
+
+
+# to play the cam inside the label
+class videoLabel(QWidget):
+    def __init__(self , label):
+        # super(videoLabel, self).__init__()
+        # self.videoLabel = QLabel()
+        self.camera = cv2.VideoCapture(0)
+        self.shape = self.get_resolution(self.camera)
+        self.videoLabel = label
+        self.videoLabel.resize(self.shape[0], self.shape[1])
+
+    def run_thread(self,edited):
+        self.thread = videoThread(self.camera)
+        self.thread.pixmap.connect(edited)
+        self.thread.start()
+    def get_resolution(self , camera):
+        ret , frame = camera.read()
+        return frame.shape
+    # @pyqtSlot(np.ndarray)
+    def update_image(self, image):
+        print("image updated")
+        qtFrame = self.convert_cv2_to_qt(image)
+        self.videoLabel.setPixmap(qtFrame)
+
+    def convert_cv2_to_qt(self, image):
+        rgbFrame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        h, w, ch = rgbFrame.shape
+        bytesPerLine = ch * w
+        convertToQtFormat = QtGui.QImage(rgbFrame.data, w, h, bytesPerLine, QtGui.QImage.Format_RGB888)
+        p = convertToQtFormat.scaled(self.videoLabel.width(), self.videoLabel.height(), Qt.KeepAspectRatio)
+        return QPixmap.fromImage(p)
+
+    def closeThread(self):
+        self.thread.stop()
+
+
+
+class videoThread(QThread):
+    pixmap = pyqtSignal(np.ndarray)
+    def __init__(self , camera):
+        super(videoThread, self).__init__()
+        self._flag = True
+        self.camera = camera
+    def run(self):
+        while self._flag:
+            print("Thread is runing")
+            ret , frame = self.camera.read()
+            
+            self.pixmap.emit(frame)
+        self.camera.release()
+
+    def stop(self):
+        self._flag = False
+        self.wait()
+
+# main
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    home = homeWindow()
+    widget = QtWidgets.QStackedWidget()
+    widget.addWidget(home)
+    widget.setFixedHeight(800)
+    widget.setFixedWidth(1200)
+    widget.show()
+    try:
+        sys.exit(app.exec_())
+    except:
+        print("Exiting From The Application")
