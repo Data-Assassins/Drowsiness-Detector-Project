@@ -1,4 +1,7 @@
-from facedetection.send_emails import send_mail_test
+from enum import auto
+from re import U
+from typing import Counter
+from facedetection.send_emails import send_email
 import cv2
 import numpy as np
 import face_recognition
@@ -20,7 +23,7 @@ import dlib
 # Face detection in Real Time detection
 # First Step: Loading the known images files 
  
-path = '../fd_database'
+path = 'fd_database'
 employee_images = []
 employee_names = []
 images_list = os.listdir(path)
@@ -48,7 +51,7 @@ print(face_comparison([findEncodings(employee_images)[0]],findEncodings(employee
 
 # Drowsy Detection:
 def sound_alarm(path):
-    music = pyglet.resource.media("alarm.wav")
+    music = pyglet.resource.media("alarm.mp3")
     music.play()
     pyglet.app.run()
 
@@ -65,14 +68,14 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-w", "--webcam", type=int, default=0,
 	help="index of webcam on system")
 ap.add_argument("-a", "--alarm", type=int, default=0,
- 	help="path alarm .WAV file")               
+ 	help="path alarm .mp3 file")               
 args = vars(ap.parse_args())
 
 EYE_THRESHOLD = 0.3
-EYE_CONSEC_FRAMES = 10
+EYE_CONSEC_FRAMES = 30
 
-COUNTER = 0
-ALARAM = False
+
+
 
 print("[INFO] loading facial landmark predictor...")
 detector = dlib.get_frontal_face_detector()
@@ -82,12 +85,17 @@ predictor = dlib.shape_predictor("facedetection/68_face_landmarks.dat")
 (right_Start, right_End) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 print( "[INFO] starting video thread ..")
-
+cap = cv2.VideoCapture(0)
 # sleep_times=0
-def drwosy(imgS,sleep_times=0):
-    rects = detector(imgS, 0)
+def drwosy(counter,sleep_times,name):
+    ALARAM = False
+    
+    ret, frame=cap.read()
+    frame = imutils.resize(frame, width=450)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    rects = detector(gray, 0)
     for rect in rects:
-        shape = predictor(imgS, rect)
+        shape = predictor(gray, rect)
         shape = face_utils.shape_to_np(shape)
         leftEye = shape[left_Start:left_End]
         rightEye = shape[right_Start:right_End]
@@ -99,36 +107,47 @@ def drwosy(imgS,sleep_times=0):
         # cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
         # cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
         if ear < EYE_THRESHOLD:
-            COUNTER += 1
-            print(COUNTER)
-            if COUNTER >= EYE_CONSEC_FRAMES:
+            counter += 1
+            print(counter)
+            if counter >= EYE_CONSEC_FRAMES:
                 
                 if not ALARAM:
-                    ALARAM = True
+                    # ALARAM = True
                     # t = Thread(target=sound_alarm,args=(args["alarm"],))
                     # t.deamon = True
                     # t.start()
                     print('alarm')
-                    COUNTER = 0
+                    counter = 0
                     sleep_times+=1
                     if sleep_times == 4:
-                        print('send email')
+                                        
+                        img_name = "forsending.jpg"
+                        cv2.imwrite(img_name, frame)  
+                        send_email("forsending.jpg",f"{name} status is drowsy")
+                        os.remove("forsending.jpg")
+                        # authorize_flag=False
+                        # counter_sending=0
+                        print("done from sending email")
                         sleep_times =0 
-                cv2.putText(imgS, "DROWSINESS ALERT!", (10, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-                cv2.putText(imgS, f"sleep times={sleep_times}", (100,70),cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+                cv2.putText(gray, "DROWSINESS ALERT!", (10, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+                cv2.putText(gray, f"sleep times={sleep_times}", (100,70),cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         else:
-                        COUNTER = 0
+                        counter = 0
                         ALARAM = False  
-        cv2.putText(imgS, "EAR: {:.2f}".format(ear), (300, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-    return imgS
+                        
+        cv2.putText(gray, "EAR: {:.2f}".format(ear), (300, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+    return (counter,sleep_times)
 
 def detection_real_time():
     Keyboard=KeyboardInterrupt()
     encodeListKnown = findEncodings(employee_images)
     print('Encoding Complete')
-    cap = cv2.VideoCapture(0)
+    # COUNTER = 0
     counter=0
-   
+    sleep_times=0
+    unauthorize_flag=True
+    # authorize_flag=True
+    counter_sending=0
     while cap.isOpened():
         success, img = cap.read()
         
@@ -153,11 +172,25 @@ def detection_real_time():
                 cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
                 cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
                 cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
-                print("Hi",name)
-                drwosy(imgS)
-               
+                # print("Hi",name)
+                counter,sleep_times=drwosy(counter,sleep_times,name)
+                # if counter_sending>2 and authorize_flag:
+                #         img_name = "forsending.jpg"
+                #         cv2.imwrite(img_name, img)  
+                #         send_email("forsending.jpg",f"{name} status is drowsy")
+                #         os.remove("forsending.jpg")
+                #         authorize_flag=False
+                #         counter_sending=0
+                #         print("done from sending email")
             else:
-                print(results[matchIndex])
+                counter_sending+=1
+                if unauthorize_flag and counter_sending>25:
+                    print("unauthorize")
+                    img_name = "forsending.jpg"
+                    cv2.imwrite(img_name,img)    
+                    send_email("forsending.jpg",'There is unauthorized access!')
+                    os.remove("forsending.jpg")
+                    unauthorize_flag=False
                
         # To show the images            
         cv2.imshow('Face Recognition',img)
