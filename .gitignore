@@ -10,3 +10,9 @@
 
 __pycache__/
 *.py[cod]
+
+__init__.cpython-39.pyc/
+drowsiness.cpython-39.pyc/
+face_detection.cpython-39.pyc/
+save_reprot.cpython-39.pyc/
+send_emails.cpython-39.pyc/
