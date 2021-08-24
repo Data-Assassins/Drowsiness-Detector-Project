@@ -21,3 +21,10 @@ def save_U_report(name):
             wr.writerow([f'{name}','Drowsniess',f'{local_time}'])
 
 
+def save_report():
+    seconds = time.time()
+    local_time = time.ctime(seconds)
+    with open('UN_reports.csv', 'w', ) as myfile:
+        wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+        wr.writerow(['Status','time'])
+        wr.writerow(['unuthorized person',f'this {local_time}'])
