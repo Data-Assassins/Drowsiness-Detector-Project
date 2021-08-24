@@ -17,8 +17,7 @@ def save_U_report(name):
     with open('reports.csv', 'w', ) as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(['Name','status','time'])
-        for _ in range(3):
-            wr.writerow([f'{name}','Drowsniess',f'{local_time}'])
+        wr.writerow([f'{name}','Drowsniess',f'{local_time}'])
 
 
 def save_report():
@@ -28,3 +27,4 @@ def save_report():
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(['Status','time'])
         wr.writerow(['unuthorized person',f'this {local_time}'])
+
