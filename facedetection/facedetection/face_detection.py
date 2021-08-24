@@ -201,7 +201,8 @@ def detection_real_time():
                     os.remove("forsending.jpg")
                     unauthorize_flag=False
                
-
+        # To show the images            
+        cv2.imshow('Face Recognition',img)
         # To show the images            
         
         # The time lag 
