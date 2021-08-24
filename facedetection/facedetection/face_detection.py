@@ -100,6 +100,7 @@ def drwosy(imgS,sleep_times=0):
         # cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
         if ear < EYE_THRESHOLD:
             COUNTER += 1
+            print(COUNTER)
             if COUNTER >= EYE_CONSEC_FRAMES:
                 
                 if not ALARAM:
