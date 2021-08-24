@@ -124,6 +124,7 @@ def drwosy(counter,sleep_times,name):
                         cv2.imwrite(img_name, frame)  
                         send_email("forsending.jpg",f"{name} status is drowsy")
                         os.remove("forsending.jpg")
+                        save_report(name)
                         # authorize_flag=False
                         # counter_sending=0
                         print("done from sending email")
@@ -178,7 +179,7 @@ def detection_real_time():
 
                 # print("Hi",name)
                 counter,sleep_times=drwosy(counter,sleep_times,name)
-                save_U_report(name)
+               
                 # if counter_sending>2 and authorize_flag:
                 #         img_name = "forsending.jpg"
                 #         cv2.imwrite(img_name, img)  
