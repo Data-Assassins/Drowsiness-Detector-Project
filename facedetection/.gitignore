@@ -1,3 +1,5 @@
 68_face_landmarks.dat
 
-!**/__pycache__/
+
+__pycache__/
+*.pyc
