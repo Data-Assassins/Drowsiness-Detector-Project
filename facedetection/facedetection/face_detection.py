@@ -7,6 +7,7 @@ from datetime import datetime
 import time
 from facedetection.drowsiness import drowsiness_detection
 from imutils.video import VideoStream
+from facedetection.save_reprot import *
 # Face detection in Real Time detection
 # First Step: Loading the known images files 
  
@@ -81,6 +82,7 @@ def detection_real_time():
                         img_name = "forsending.jpg"
                         cv2.imwrite(img_name, img)  
                         send_email("forsending.jpg",f"{name} status is drowsy")
+                        save_U_report(name)
                         counter_sending=0
                     counter=0
             elif flag:
@@ -91,6 +93,7 @@ def detection_real_time():
                 cv2.imwrite(img_name, img)    
                 send_email("forsending.jpg",'There is Unauthorised access!')
                 os.remove("forsending.jpg")
+                save_report()
                 # counter_sending=0    
         # To show the images            
         
