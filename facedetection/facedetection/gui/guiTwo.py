@@ -2,12 +2,12 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt , QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QPalette, QPixmap 
-from PyQt5.QtWidgets import QApplication, QWidget ,QDialog
+from PyQt5.QtWidgets import QApplication, QWidget ,QDialog,QTableWidgetItem,QMessageBox
 from PyQt5 import QtWidgets ,QtGui
 from PyQt5.uic import loadUi
 import cv2
 import numpy as np
-
+import csv
 
 database={'admin': '1234','saadoun':'1234', 'haya': '1234', 'ali': '1234'}
 
@@ -130,6 +130,25 @@ class reportWindow(QDialog):
         loadUi('facedetection/gui/guiReport.ui', self)
         self.setWindowTitle("Report")
         self.backbutton.clicked.connect(self.back_button_function)
+        self.Reporttable.setColumnWidth(0,300)
+        self.Reporttable.setColumnWidth(1,300)
+        self.Reporttable.setColumnWidth(2,318)
+        #Row count
+        #Column count
+        # self.Reporttable.setColumnCount(3)  
+        self.read_report()
+
+    def read_report(self):
+        """read from csv file"""
+        with open('report.csv', 'r') as csvfile:
+            reader = csv.reader(csvfile)
+            # self.Reporttable.setRowCount(len(list(reader))-1)
+            self.Reporttable.setRowCount(13)
+            for row in reader:
+                print("this is row", row)
+                for i in range(len(row)):
+                    # self.Reporttable.setItem(read each line in the reader,row_num, each value to the table column count)
+                    self.Reporttable.setItem(reader.line_num-2,i,QTableWidgetItem(row[i]))
 
     # to handle the back button inside the signup window
     def back_button_function(self):

@@ -79,28 +79,49 @@ font-weight: bold;</string>
    <widget class="QTableWidget" name="Reporttable">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>170</x>
       <y>280</y>
-      <width>861</width>
+      <width>921</width>
       <height>431</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">width:200px;</string>
+     <string notr="true"/>
     </property>
     <column>
      <property name="text">
       <string>Name</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Status</string>
      </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>Time</string>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </column>
    </widget>
