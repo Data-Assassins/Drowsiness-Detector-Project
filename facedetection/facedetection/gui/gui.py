@@ -159,15 +159,15 @@ class reportWindow(QDialog):
         widget.removeWidget(widget.currentWidget())
         widget.setCurrentIndex(widget.currentIndex() - 1)
 
-# main
-app = QApplication(sys.argv)
-home = mainWindow()
-widget = QtWidgets.QStackedWidget()
-widget.addWidget(home)
-widget.setFixedHeight(800)
-widget.setFixedWidth(1200)
-widget.show()
-try:
-    sys.exit(app.exec_())
-except:
-    print("Exiting From The Application")
+# # main
+# app = QApplication(sys.argv)
+# home = mainWindow()
+# widget = QtWidgets.QStackedWidget()
+# widget.addWidget(home)
+# widget.setFixedHeight(800)
+# widget.setFixedWidth(1200)
+# widget.show()
+# try:
+#     sys.exit(app.exec_())
+# except:
+#     print("Exiting From The Application")
