@@ -1,6 +1,8 @@
+
 from enum import auto
 from re import U
 from typing import Counter
+
 from facedetection.send_emails import send_email
 import cv2
 import numpy as np
@@ -8,6 +10,7 @@ import face_recognition
 import os
 from datetime import datetime
 import time
+
 from scipy.spatial import distance as dist
 from imutils.video import VideoStream
 from imutils import face_utils
@@ -18,6 +21,7 @@ import argparse
 import imutils
 
 import dlib
+
 
 
 # Face detection in Real Time detection
@@ -142,6 +146,7 @@ def detection_real_time():
     Keyboard=KeyboardInterrupt()
     encodeListKnown = findEncodings(employee_images)
     print('Encoding Complete')
+
     # COUNTER = 0
     counter=0
     sleep_times=0
@@ -152,12 +157,14 @@ def detection_real_time():
         success, img = cap.read()
         
         
+
         imgS = cv2.resize(img,(0,0),None,0.25,0.25)
         imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
         # The Second Step: Get the face location fpr each face in each image. 
         facesCurFrame = face_recognition.face_locations(imgS)
         encodesCurFrame = face_recognition.face_encodings(imgS,facesCurFrame)
          # The Third step: Get the face encodings,for each face in each image file . 
+        
         for encodeFace,faceLoc in zip(encodesCurFrame,facesCurFrame):
             results = face_comparison(encodeListKnown,encodeFace)
             face_dis = face_recognition.face_distance(encodeListKnown,encodeFace)
@@ -165,6 +172,7 @@ def detection_real_time():
             matchIndex = np.argmin(face_dis)
 
             if results[matchIndex]:
+                flag=True
                 name = employee_names[matchIndex].upper()
                 
                 y1,x2,y2,x1 = faceLoc
@@ -172,6 +180,7 @@ def detection_real_time():
                 cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
                 cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
                 cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+
                 # print("Hi",name)
                 counter,sleep_times=drwosy(counter,sleep_times,name)
                 # if counter_sending>2 and authorize_flag:
@@ -192,17 +201,19 @@ def detection_real_time():
                     os.remove("forsending.jpg")
                     unauthorize_flag=False
                
+
         # To show the images            
-        cv2.imshow('Face Recognition',img)
+        
         # The time lag 
+
         # cv2.waitKey(1) 
         key = cv2.waitKey(1) & 0xFF
         if key == ord("q"):
             break
         
      
+
     cap.release()
 
 if __name__== '__main__':
-
    detection_real_time()

@@ -25,4 +25,3 @@ def send_email(img,msg):
 # if __name__ == '__main__':
 #     # sendmail("Arahal81@gmail.com", "This is a test email from python script")
 #     # send_mail_test()
-    
