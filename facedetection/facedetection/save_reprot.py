@@ -1,30 +1,40 @@
-import csv
+import csv 
 import time
+from csv import DictWriter
+
 # def save_report():
 #     seconds = time.time()
 #     local_time = time.ctime(seconds)
-#     with open('reports.csv','w+') as f :
-#         write = csv.writer(f)
-#         f.write('Name = drowsniess ')
-#         f.write('Status = drowsniess ')
-#         f.write(f'Time = {local_time} \n')
-# save_report()
+#     # The list of column names as mentioned in the CSV file
+    
+#     headersCSV = ['Name','status','time']      
+#     # The data assigned to the dictionary 
+    
+#     with open('UN_reports.csv', 'a', newline='') as f_object:
+#         # Pass the CSV  file object to the Dictwriter() function
+#         # Result - a DictWriter object
+#         dictwriter_object = DictWriter(f_object, fieldnames=headersCSV)
+#         # Pass the data in the dictionary as an argument into the writerow() function
+#         dictwriter_object.writerow(dict)
+#         # Close the file object
+#         f_object.close()
 
-def save_U_report(name):
+        
+def save_report(name=None):
     seconds = time.time()
     local_time = time.ctime(seconds)
-    # yourName.append()
-    with open('reports.csv', 'w', ) as myfile:
-        wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-        wr.writerow(['Name','status','time'])
-        wr.writerow([f'{name}','Drowsniess',f'{local_time}'])
-
-
-def save_report():
-    seconds = time.time()
-    local_time = time.ctime(seconds)
-    with open('UN_reports.csv', 'w', ) as myfile:
-        wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-        wr.writerow(['Status','time'])
-        wr.writerow(['unuthorized person',f'this {local_time}'])
-
+    # The list of column names as mentioned in the CSV file
+    headersCSV = ['Name','status','time']      
+    # The data assigned to the dictionary 
+    if name:
+        dict={'Name':f'{name}','status':'Drowsniess','time':f'{local_time}'}
+    else:
+        dict={'Name':"unknown person",'status':'unuthorized access','time':f'{local_time}'}
+    with open('report.csv', 'a', newline='') as f_object:
+        # Pass the CSV  file object to the Dictwriter() function
+        # Result - a DictWriter object
+        dictwriter_object = DictWriter(f_object, fieldnames=headersCSV)
+        # Pass the data in the dictionary as an argument into the writerow() function
+        dictwriter_object.writerow(dict)
+        # Close the file object
+        f_object.close()
