@@ -36,8 +36,10 @@ def drowsiness_detection(vs,name):
     EYE_THRESHOLD = 0.3
     EYE_CONSEC_FRAMES = 48
 
-    COUNTER = 0
-    ALARAM = False
+
+EYE_THRESHOLD = 0.3
+EYE_CONSEC_FRAMES = 20
+
 
     print("[INFO] loading facial landmark predictor...")
     detector = dlib.get_frontal_face_detector()
@@ -87,6 +89,7 @@ def drowsiness_detection(vs,name):
             else:
                             COUNTER = 0
                             ALARAM = False  
+
         cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         # cv2.putText(frame,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
         cv2.imshow('Face Recognition',frame)

@@ -1,6 +1,7 @@
 import smtplib
 import imghdr
 from email.message import EmailMessage
+
 def send_email(img,msg):
     Sender_Email = "saaddhirat@gmail.com"
     Reciever_Email = "arahal81@gmail.com"
