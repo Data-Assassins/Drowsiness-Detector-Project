@@ -2,7 +2,6 @@
 from enum import auto
 from re import U
 from typing import Counter
-
 from facedetection.send_emails import send_email
 import cv2
 import numpy as np
@@ -10,19 +9,15 @@ import face_recognition
 import os
 from datetime import datetime
 import time
-
 from scipy.spatial import distance as dist
 from imutils.video import VideoStream
 from imutils import face_utils
 from threading import Thread
-
 import pyglet
 import argparse
 import imutils
-
 import dlib
-
-
+from facedetection.save_reprot import *
 
 # Face detection in Real Time detection
 # First Step: Loading the known images files 
@@ -183,6 +178,7 @@ def detection_real_time():
 
                 # print("Hi",name)
                 counter,sleep_times=drwosy(counter,sleep_times,name)
+                save_U_report(name)
                 # if counter_sending>2 and authorize_flag:
                 #         img_name = "forsending.jpg"
                 #         cv2.imwrite(img_name, img)  
@@ -200,7 +196,8 @@ def detection_real_time():
                     send_email("forsending.jpg",'There is unauthorized access!')
                     os.remove("forsending.jpg")
                     unauthorize_flag=False
-               
+                    save_report()
+
         # To show the images            
         cv2.imshow('Face Recognition',img)
         # To show the images            
