@@ -34,12 +34,13 @@ database={'admin': '1234','saadoun':'1234', 'haya': '1234', 'ali': '1234'}
 path = 'fd_database'
 employee_images = []
 employee_names = []
-
-images_list = os.listdir(path)
-for cl in images_list:
-    curImg = cv2.imread(f'{path}/{cl}')
-    employee_images.append(curImg)
-    employee_names.append(os.path.splitext(cl)[0])
+def images_data():
+    images_list = os.listdir(path)
+    for cl in images_list:
+        curImg = cv2.imread(f'{path}/{cl}')
+        employee_images.append(curImg)
+        employee_names.append(os.path.splitext(cl)[0])
+    print("from images data")
 
 EYE_THRESHOLD = 0.25
 EYE_CONSEC_FRAMES = 30
@@ -341,12 +342,12 @@ class videoThread(QThread):
     def drwosy(self,name):
         
         if self.camera.isOpened():    
-            ret, self.frame=self.camera.read()
+            ret, self.frame=self.camera.read()or None
             cv2.rectangle(self.frame,(self.x1,self.y1),(self.x2,self.y2),(0,255,0),2)
             cv2.rectangle(self.frame,(self.x1,self.y2-35),(self.x2,self.y2),(0,255,0),cv2.FILLED)
             cv2.putText(self.frame,name,(self.x1+6,self.y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
             self.pixmap.emit(self.frame)
-            self.frame = imutils.resize(self.frame, width=450)
+            self.frame = imutils.resize(self.frame, width=700,height=700)
             gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
             rects = detector(gray, 0)
             for rect in rects:
@@ -402,6 +403,7 @@ class videoThread(QThread):
 
     def detection_real_time(self):
         Keyboard=KeyboardInterrupt()
+        images_data()
         encodeListKnown = findEncodings(employee_images)
         print('Encoding Complete')
 
@@ -412,6 +414,8 @@ class videoThread(QThread):
         # counter_sending=0
         # authorize_flag=True
         while self.camera.isOpened():
+            # images_data()
+            # encodeListKnown = findEncodings(employee_images)
             success, self.frame = self.camera.read()
             imgS = cv2.resize(self.frame,(0,0),None,0.25,0.25)
             imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
