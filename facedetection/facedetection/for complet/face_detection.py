@@ -84,9 +84,9 @@ predictor = dlib.shape_predictor("facedetection/68_face_landmarks.dat")
 (right_Start, right_End) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 print( "[INFO] starting video thread ..")
-cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(0)
 # sleep_times=0
-def drwosy(counter,sleep_times,name):
+def drwosy(cap,counter,sleep_times,name):
     ALARAM = False
     
     ret, frame=cap.read()
@@ -138,81 +138,78 @@ def drwosy(counter,sleep_times,name):
         cv2.putText(gray, "EAR: {:.2f}".format(ear), (300, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
     return (counter,sleep_times)
 
-def detection_real_time():
+def detection_real_time(cap,counter,sleep_times,unauthorize_flag,counter_sending):
     Keyboard=KeyboardInterrupt()
     encodeListKnown = findEncodings(employee_images)
     print('Encoding Complete')
 
     # COUNTER = 0
-    counter=0
-    sleep_times=0
-    unauthorize_flag=True
+    # counter=0
+    # sleep_times=0
+    # unauthorize_flag=True
+    # counter_sending=0
     # authorize_flag=True
-    counter_sending=0
-    while cap.isOpened():
-        success, img = cap.read()
-        
-        
+    # while cap.isOpened():
+    success, img = cap.read()
 
-        imgS = cv2.resize(img,(0,0),None,0.25,0.25)
-        imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
-        # The Second Step: Get the face location fpr each face in each image. 
-        facesCurFrame = face_recognition.face_locations(imgS)
-        encodesCurFrame = face_recognition.face_encodings(imgS,facesCurFrame)
-         # The Third step: Get the face encodings,for each face in each image file . 
+    imgS = cv2.resize(img,(0,0),None,0.25,0.25)
+    imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
+    # The Second Step: Get the face location fpr each face in each image. 
+    facesCurFrame = face_recognition.face_locations(imgS)
+    encodesCurFrame = face_recognition.face_encodings(imgS,facesCurFrame)
+        # The Third step: Get the face encodings,for each face in each image file . 
+    
+    for encodeFace,faceLoc in zip(encodesCurFrame,facesCurFrame):
+        results = face_comparison(encodeListKnown,encodeFace)
+        face_dis = face_recognition.face_distance(encodeListKnown,encodeFace)
         
-        for encodeFace,faceLoc in zip(encodesCurFrame,facesCurFrame):
-            results = face_comparison(encodeListKnown,encodeFace)
-            face_dis = face_recognition.face_distance(encodeListKnown,encodeFace)
+        matchIndex = np.argmin(face_dis)
+
+        if results[matchIndex]:
+            flag=True
+            name = employee_names[matchIndex].upper()
             
-            matchIndex = np.argmin(face_dis)
+            y1,x2,y2,x1 = faceLoc
+            y1, x2, y2, x1 = y1*4,x2*4,y2*4,x1*4
+            cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
+            cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
+            cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
 
-            if results[matchIndex]:
-                flag=True
-                name = employee_names[matchIndex].upper()
-                
-                y1,x2,y2,x1 = faceLoc
-                y1, x2, y2, x1 = y1*4,x2*4,y2*4,x1*4
-                cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
-                cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
-                cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
-
-                # print("Hi",name)
-                counter,sleep_times=drwosy(counter,sleep_times,name)
-               
-                # if counter_sending>2 and authorize_flag:
-                #         img_name = "forsending.jpg"
-                #         cv2.imwrite(img_name, img)  
-                #         send_email("forsending.jpg",f"{name} status is drowsy")
-                #         os.remove("forsending.jpg")
-                #         authorize_flag=False
-                #         counter_sending=0
-                #         print("done from sending email")
-            else:
-                counter_sending+=1
-                if unauthorize_flag and counter_sending>25:
-                    print("unauthorize")
-                    img_name = "forsending.jpg"
-                    cv2.imwrite(img_name,img)    
-                    send_email("forsending.jpg",'There is unauthorized access!')
-                    os.remove("forsending.jpg")
-                    unauthorize_flag=False
-                    save_report()
+            # print("Hi",name)
+            counter,sleep_times=drwosy(cap,counter,sleep_times,name)
+            
+            # if counter_sending>2 and authorize_flag:
+            #         img_name = "forsending.jpg"
+            #         cv2.imwrite(img_name, img)  
+            #         send_email("forsending.jpg",f"{name} status is drowsy")
+            #         os.remove("forsending.jpg")
+            #         authorize_flag=False
+            #         counter_sending=0
+            #         print("done from sending email")
+        else:
+            counter_sending+=1
+            if unauthorize_flag and counter_sending>25:
+                print("unauthorize")
+                img_name = "forsending.jpg"
+                cv2.imwrite(img_name,img)    
+                send_email("forsending.jpg",'There is unauthorized access!')
+                os.remove("forsending.jpg")
+                unauthorize_flag=False
+                save_report()
 
         # To show the images            
-        cv2.imshow('Face Recognition',img)
+        # cv2.imshow('Face Recognition',img)
         # To show the images            
         
         # The time lag 
 
         # cv2.waitKey(1) 
-        key = cv2.waitKey(1) & 0xFF
-        if key == ord("q"):
-            break
-        
+        # key = cv2.waitKey(1) & 0xFF
+        # if key == ord("q"):
+        #     break
+    return img    
      
 
-    cap.release()
 
 if __name__== '__main__':
    detection_real_time()
