@@ -133,7 +133,7 @@ class loginWindow(QDialog):
     def back_button_function(self):
         # to flip the screen to the main window
         widget.removeWidget(widget.currentWidget())
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() )
 
 
 # signup page 
@@ -182,7 +182,7 @@ class signupWindow(QDialog):
     def back_button_function(self):
         # to flip the screen to the main window
         widget.removeWidget(widget.currentWidget())
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() )
 
 # report page       
 class reportWindow(QDialog):
@@ -215,7 +215,7 @@ class reportWindow(QDialog):
     def back_button_function(self):
         # to flip the screen to the main window
         widget.removeWidget(widget.currentWidget())
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() )
 
 ############################################################################################
 ###########################################  guitwo ########################################
@@ -243,7 +243,7 @@ class mainWindow(QDialog):
     def back_button_function(self):
         # to flip the screen to the main window
         widget.removeWidget(widget.currentWidget())
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() )
 
 # Cam page
 class videoWindow(QDialog):
@@ -258,9 +258,9 @@ class videoWindow(QDialog):
         self.video.update_image(image)
     def back_button_function(self):
         # to flip the screen to the main window
+        self.video.camera.release()
         widget.removeWidget(widget.currentWidget())
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-
+        widget.setCurrentIndex(widget.currentIndex())
 # to play the cam inside the label
 class videoLable(QWidget):
     def __init__(self , lable):
@@ -304,7 +304,7 @@ class videoThread(QThread):
         # self.video = self.videoLabel(self.videoLabel)
         # self.video.run_thread(self.edited)
         # self.backbutton.clicked.connect(self.back_button_function)
-        self._flag = True
+        # self._flag = True
         self.camera = camera
         self.counter=0
         self.sleep_times=0
@@ -317,13 +317,17 @@ class videoThread(QThread):
         self.args = vars(self.ap.parse_args())
     def  run(self):
 
-        while self._flag:
+        while self.camera.isOpened():
             print("Thread is runing")
             # ret , self.frame = self.camera.read()
             self.detection_real_time()
             # self.pixmap.emit(self.frame)
+        
+    def back_button_function(self):
+        # to flip the screen to the main window
+        widget.removeWidget(widget.currentWidget())
+        widget.setCurrentIndex(widget.currentIndex() )
         self.camera.release()
-
     def stop(self):
         self._flag = False
         self.wait()
@@ -336,65 +340,65 @@ class videoThread(QThread):
 
     def drwosy(self,name):
         
-        
-        ret, self.frame=self.camera.read()
-        cv2.rectangle(self.frame,(self.x1,self.y1),(self.x2,self.y2),(0,255,0),2)
-        cv2.rectangle(self.frame,(self.x1,self.y2-35),(self.x2,self.y2),(0,255,0),cv2.FILLED)
-        cv2.putText(self.frame,name,(self.x1+6,self.y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
-        self.pixmap.emit(self.frame)
-        self.frame = imutils.resize(self.frame, width=450)
-        gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
-        rects = detector(gray, 0)
-        for rect in rects:
-            shape = predictor(gray, rect)
-            shape = face_utils.shape_to_np(shape)
-            leftEye = shape[left_Start:left_End]
-            rightEye = shape[right_Start:right_End]
-            leftEAR = eye_aspect_ratio(leftEye)
-            rightEAR = eye_aspect_ratio(rightEye)
-            ear = (leftEAR + rightEAR) / 2.0
-            leftEyeHull = cv2.convexHull(leftEye)
-            rightEyeHull = cv2.convexHull(rightEye)
-            # cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
-            # cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
-            if ear < EYE_THRESHOLD:
-                self.counter += 1
-                print(self.counter)
-                if self.counter >= EYE_CONSEC_FRAMES:
-                    if self.counter==30:
-                        self.alarm=False
-                    if not self.alarm:
-                        self.alarm = True
-                        # t = audio_thread(target=self.sound_alarm,args=(self.args["alarm"],))
-                        # t.deamon = True
-                        # t.start()
-                        duration = 1  # seconds
-                        freq = 700  # Hz
-                        os.system('play -nq -t alsa synth {} sine {}'.format(duration, freq))
-                        print('alarm')
-                        self.counter = 0
-                        self.sleep_times+=1
-                        if self.sleep_times == 4:
-                                            
-                            img_name = "forsending.jpg"
-                            cv2.imwrite(img_name, self.frame)  
-                            send_email("forsending.jpg",f"{name} status is drowsy")
-                            os.remove("forsending.jpg")
-                            save_report(name)
-                            # authorize_flag=False
-                            # counter_sending=0
-                            print("done from sending email")
-                            self.sleep_times =0 
-                    cv2.putText(gray, "DROWSINESS ALERT!", (10, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-                    cv2.putText(gray, f"sleep times={self.sleep_times}", (100,70),cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-                    
-            else:
-                            self.counter = 0
+        if self.camera.isOpened():    
+            ret, self.frame=self.camera.read()
+            cv2.rectangle(self.frame,(self.x1,self.y1),(self.x2,self.y2),(0,255,0),2)
+            cv2.rectangle(self.frame,(self.x1,self.y2-35),(self.x2,self.y2),(0,255,0),cv2.FILLED)
+            cv2.putText(self.frame,name,(self.x1+6,self.y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+            self.pixmap.emit(self.frame)
+            self.frame = imutils.resize(self.frame, width=450)
+            gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
+            rects = detector(gray, 0)
+            for rect in rects:
+                shape = predictor(gray, rect)
+                shape = face_utils.shape_to_np(shape)
+                leftEye = shape[left_Start:left_End]
+                rightEye = shape[right_Start:right_End]
+                leftEAR = eye_aspect_ratio(leftEye)
+                rightEAR = eye_aspect_ratio(rightEye)
+                ear = (leftEAR + rightEAR) / 2.0
+                leftEyeHull = cv2.convexHull(leftEye)
+                rightEyeHull = cv2.convexHull(rightEye)
+                # cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
+                # cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
+                if ear < EYE_THRESHOLD:
+                    self.counter += 1
+                    print(self.counter)
+                    if self.counter >= EYE_CONSEC_FRAMES:
+                        if self.counter==30:
                             self.alarm=False
-                              
-                            
-            cv2.putText(gray, "EAR: {:.2f}".format(ear), (300, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-        # return (counter,self.sleep_times)
+                        if not self.alarm:
+                            self.alarm = True
+                            # t = audio_thread(target=self.sound_alarm,args=(self.args["alarm"],))
+                            # t.deamon = True
+                            # t.start()
+                            duration = 1  # seconds
+                            freq = 700  # Hz
+                            os.system('play -nq -t alsa synth {} sine {}'.format(duration, freq))
+                            print('alarm')
+                            self.counter = 0
+                            self.sleep_times+=1
+                            if self.sleep_times == 4:
+                                                
+                                img_name = "forsending.jpg"
+                                cv2.imwrite(img_name, self.frame)  
+                                send_email("forsending.jpg",f"{name} status is drowsy")
+                                os.remove("forsending.jpg")
+                                save_report(name)
+                                # authorize_flag=False
+                                # counter_sending=0
+                                print("done from sending email")
+                                self.sleep_times =0 
+                        cv2.putText(gray, "DROWSINESS ALERT!", (10, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+                        cv2.putText(gray, f"sleep times={self.sleep_times}", (100,70),cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+                        
+                else:
+                                self.counter = 0
+                                self.alarm=False
+                                
+                                
+                cv2.putText(gray, "EAR: {:.2f}".format(ear), (300, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+            # return (counter,self.sleep_times)
 
     def detection_real_time(self):
         Keyboard=KeyboardInterrupt()
