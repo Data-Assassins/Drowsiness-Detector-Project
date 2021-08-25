@@ -7,3 +7,8 @@
 `sudo apt-get install qttools5-dev-tools`
 
 `poetry install`
+`sudo apt install sox`
+
+## if the app did not work try to install folwoing comand
+
+`sudo apt-get install libopencv-*`
