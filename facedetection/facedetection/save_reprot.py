@@ -27,7 +27,7 @@ def save_report(name=None):
     headersCSV = ['Name','status','time']      
     # The data assigned to the dictionary 
     if name:
-        dict={'Name':f'{name}','status':'Drowsniess','time':f'{local_time}'}
+        dict={'Name':f'{name}','status':'Drowsy','time':f'{local_time}'}
     else:
         dict={'Name':"unknown person",'status':'unuthorized access','time':f'{local_time}'}
     with open('report.csv', 'a', newline='') as f_object:
