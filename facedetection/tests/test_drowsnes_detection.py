@@ -1,43 +1,41 @@
 import pytest 
-from facedetection.drowsiness import *
-from facedetection import *
+from facedetection.gui.guiTwo import *
 
-def test_open_cam():
-  assert VideoStream(src=args["webcam"]).start()
-  
+def converting_image(path):
+      # 1- Loading the image file as numpy array 
+    img_tom = cv2.imread(path)
+       # 2- Converting to gray scale
+    img_tom = cv2.cvtColor(img_tom,cv2.COLOR_BGR2RGB)
+    encoded = face_recognition.face_encodings(img_tom)[0]
+    return encoded
+
+
+@pytest.fixture
+def one_path():
+   return  converting_image('fd_database/tom_test.jpeg')
+
+
+
+def test_findencoding2(one_path):
+    # Arrange 
+    img_tom = [cv2.imread('fd_database/tom_test.jpeg')]
+    expected = one_path
+    # Act 
+    actual = findEncodings(img_tom)[0]
+    assert expected[0] == actual[0]
     
-def test_close_cam():
-    vs = VideoStream(src=args["webcam"]).start()
-    assert vs 
-    cv2.destroyAllWindows()
-    vs.stop()   
-
-def test_ear():
-            leftEAR = eye_aspect_ratio(leftEye)
-            rightEAR = eye_aspect_ratio(rightEye)
-            assert (leftEAR + rightEAR) / 2.0
-            
-
-# def test_check_alarm():
-
-#     eye_ear = eye_aspect_ratio(eye)
-#     EYE_THRESHOLD=0.3
-#     if eye_ear < EYE_THRESHOLD:
-#         assert ALARAM            
-
-def test_detect_left_eye():
-        rects = detector(gray, 0)
-        for rect in rects:
-            shape = predictor(gray, rect)
-            shape = face_utils.shape_to_np(shape)
-            leftEye = shape[left_Start:left_End]
-        assert  leftEye.any()
+def test_left_eye_recognetion():
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor("facedetection/68_face_landmarks.dat")
+    (left_Start, left_End) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
+    assert  [left_Start, left_End]
 
 
-def test_detect_right_eye():
-        rects = detector(gray, 0)
-        for rect in rects:
-            shape = predictor(gray, rect)
-            shape = face_utils.shape_to_np(shape)
-            rightEye = shape[right_Start:right_End]
-        assert rightEye.any()
+def test_right_eye_recognetion():
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor("facedetection/68_face_landmarks.dat")
+    (right_Start, right_End) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
+    assert  [right_Start, right_End]
+    
+    
+    

@@ -1,8 +1,5 @@
-
-from facedetection.face_detection import findEncodings,face_comparison
-import cv2
-import face_recognition
 import pytest
+from facedetection.gui.guiTwo import *
 
 
 def converting_image(path):
