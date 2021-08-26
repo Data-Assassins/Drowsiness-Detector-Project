@@ -9,6 +9,6 @@
 `poetry install`
 `sudo apt install sox`
 
-## if the app did not work try to install folwoing comand
+## if the app did not work try to install following command:
 
 `sudo apt-get install libopencv-*`

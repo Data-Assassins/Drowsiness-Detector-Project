@@ -46,13 +46,16 @@
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>180</y>
+     <y>130</y>
      <width>401</width>
      <height>311</height>
     </rect>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignHCenter|Qt::AlignTop</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">

@@ -1,5 +1,8 @@
+
+from facedetection.gui.guiTwo import*
+import cv2
+import face_recognition
 import pytest
-from facedetection.gui.guiTwo import *
 
 
 def converting_image(path):
