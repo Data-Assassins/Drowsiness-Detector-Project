@@ -39,6 +39,7 @@ def images_data():
         curImg = cv2.imread(f'{path}/{cl}')
         employee_images.append(curImg)
         employee_names.append(os.path.splitext(cl)[0])
+
 EYE_THRESHOLD = 0.25
 EYE_CONSEC_FRAMES = 30
 print("[INFO] loading facial landmark predictor...")
@@ -396,8 +397,9 @@ class videoThread(QThread):
             cv2.rectangle(self.frame,(self.x1-15,self.y1-15),(self.x2+15,self.y2+20),(0,255,0),2)
             cv2.rectangle(self.frame,(self.x1-28,self.y2+28),(self.x2+28,self.y2),(0,255,0),cv2.FILLED)
             cv2.putText(self.frame,name,(self.x1-15,self.y2+23),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+
             self.pixmap.emit(self.frame)
-            self.frame = imutils.resize(self.frame, width=450)
+            self.frame = imutils.resize(self.frame, width=700,height=700)
             gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
             rects = detector(gray, 0)
             for rect in rects:
@@ -468,6 +470,7 @@ class videoThread(QThread):
             success, self.frame = self.camera.read() 
             if not success:
                 break 
+
             imgS = cv2.resize(self.frame,(0,0),None,0.25,0.25)
             imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
             # The Second Step: Get the face location fpr each face in each image. 
