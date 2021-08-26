@@ -6,44 +6,63 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>1257</height>
+    <width>691</width>
+    <height>661</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Drowsiness-Detector</string>
   </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>700</width>
+     <height>800</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/fixedimg/background.jpg);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
   <widget class="QWidget" name="bgwidget" native="true">
    <property name="geometry">
     <rect>
-     <x>-1</x>
-     <y>-1</y>
-     <width>1201</width>
-     <height>801</height>
+     <x>130</x>
+     <y>100</y>
+     <width>451</width>
+     <height>511</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QWidget#bgwidget{
-background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(114, 159, 207, 255), stop:1 rgba(211, 215, 207, 255));}</string>
+background-color:rgba(0,0,0,0);}</string>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>230</y>
-      <width>521</width>
-      <height>91</height>
+      <x>50</x>
+      <y>120</y>
+      <width>371</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Monospace</family>
       <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-size:45px;
-</string>
+     <string notr="true">color:rgb(255, 255, 255);
+font-size:32px;
+font-weight:bold;</string>
     </property>
     <property name="text">
      <string>Drowsiness-Detector</string>
@@ -52,8 +71,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QPushButton" name="login">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>350</y>
+      <x>50</x>
+      <y>240</y>
       <width>361</width>
       <height>71</height>
      </rect>
@@ -67,7 +86,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(114, 159, 207);
+     <string notr="true">background-color: rgba(255,255,255,0.6);
  border-radius: 25px;
 font-size:18px;
 font-weight: bold;</string>
@@ -79,8 +98,8 @@ font-weight: bold;</string>
    <widget class="QPushButton" name="signup">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>460</y>
+      <x>50</x>
+      <y>370</y>
       <width>361</width>
       <height>71</height>
      </rect>
@@ -94,7 +113,7 @@ font-weight: bold;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(114, 159, 207);
+     <string notr="true">background-color: rgba(255,255,255,0.6);
  border-radius: 25px;
 font-size:18px;
 font-weight: bold;</string>
@@ -103,13 +122,13 @@ font-weight: bold;</string>
      <string>Create a new account</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>50</y>
-      <width>201</width>
-      <height>91</height>
+      <x>130</x>
+      <y>20</y>
+      <width>221</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -119,7 +138,8 @@ font-weight: bold;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-size:45px;
+     <string notr="true">font-size:50px;
+color:rgb(255, 255, 255);
 </string>
     </property>
     <property name="text">
@@ -128,6 +148,9 @@ font-weight: bold;</string>
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../../images/img.qrc"/>
+  <include location="images/img.qrc"/>
+ </resources>
  <connections/>
 </ui>
