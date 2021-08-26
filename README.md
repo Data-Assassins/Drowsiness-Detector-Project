@@ -146,8 +146,26 @@ Installing Matplotlib
 Installing OpenCV
 `pip3 install opencv-python`
 
-Installing Dlib
-`pip3 install dlib`
+## To make this application works and make changes based on your needs run the following commands
 
-Installing Pygame
-`pip3 install pygame`
+- For Linux users (Ubuntu 20.04):
+
+1. clone the repository to your local machine
+2. run the following command:
+    - install all the dependencies packages using the commands:
+        - To get the tools that used for making the GUI.
+            ```
+                sudo apt-get install python3-pyqt5  
+                sudo apt-get install pyqt5-dev-tools
+                sudo apt-get install qttools5-dev-tools
+            ```
+
+    - install the dependencies using the command:
+            ```poetry install```
+
+        - If you face any issues with the installation of the dependencies such as dlib then you can install it separately using the command.
+            ```poetry add dlib```
+            - [dlib Instulation](Images/dlib.png)
+
+- For windows use the following commands:
+    """ Upgrade to linux """
