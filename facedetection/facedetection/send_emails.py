@@ -2,7 +2,7 @@ import smtplib
 import imghdr
 from email.message import EmailMessage
 
-def send_email(img,msg):
+def send_email(img,msg:str)-> bool:
     Sender_Email = "saaddhirat@gmail.com"
     Reciever_Email = "arahal81@gmail.com"
     Password = 'saad2441993'
@@ -17,11 +17,7 @@ def send_email(img,msg):
         image_name = f.name
     newMessage.add_attachment(image_data, maintype='image', subtype=image_type, filename=image_name)
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        
         smtp.login(Sender_Email, Password)              
         smtp.send_message(newMessage)
-
+    return True
         
-# if __name__ == '__main__':
-#     # sendmail("Arahal81@gmail.com", "This is a test email from python script")
-#     # send_mail_test()
