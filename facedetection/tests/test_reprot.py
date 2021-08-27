@@ -5,10 +5,10 @@ def test_authorized_access_report():
     save_report('Mahmoud dinah')
     with open('./report.csv', 'r',encoding="utf-8") as file:
       new= file.read()
-      search = re.findall('Mahmoud dinah,Drowsniess', new)
+      search = re.findall('Mahmoud dinah,Drowsy', new)
       print(search)
     actual = search
-    expected = 'Mahmoud dinah,Drowsniess'
+    expected = 'Mahmoud dinah,Drowsy'
     assert expected == actual[-1]
 
 
