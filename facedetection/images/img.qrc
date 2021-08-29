@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="fixedimg">
+    <file>background.jpg</file>
+  </qresource>
+</RCC>

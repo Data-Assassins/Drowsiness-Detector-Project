@@ -6,6 +6,22 @@
 
 ## Name of project
 
+# Installation
+
+`poetry install`
+
+`sudo apt-get install python3-pyqt5`
+
+`sudo apt-get install pyqt5-dev-tools`
+
+`sudo apt-get install qttools5-dev-tools`
+
+`sudo apt install sox`
+
+## if the app did not work try to install following command
+
+`sudo apt-get install libopencv-*`
+
 ## Drowsiness Detection
 
 - At all sensitive works where it require high level of consciousness where the human error due to lack of attention could cause fatal consequences this raises an important concern for having a way or tool to detect this.
@@ -152,20 +168,22 @@ Installing OpenCV
 
 1. clone the repository to your local machine
 2. run the following command:
-    - install all the dependencies packages using the commands:
-        - To get the tools that used for making the GUI.
-            ```
-                sudo apt-get install python3-pyqt5  
-                sudo apt-get install pyqt5-dev-tools
-                sudo apt-get install qttools5-dev-tools
-            ```
 
-    - install the dependencies using the command:
-            ```poetry install```
+   - install all the dependencies packages using the commands:
 
-        - If you face any issues with the installation of the dependencies such as dlib then you can install it separately using the command.
-            ```poetry add dlib```
-            - [dlib Instulation](Images/dlib.png)
+     - To get the tools that used for making the GUI.
+       ```
+           sudo apt-get install python3-pyqt5
+           sudo apt-get install pyqt5-dev-tools
+           sudo apt-get install qttools5-dev-tools
+       ```
+
+   - install the dependencies using the command:
+     `poetry install`
+
+     - If you face any issues with the installation of the dependencies such as dlib then you can install it separately using the command.
+       `poetry add dlib`
+       - [dlib Instulation](Images/dlib.png)
 
 - For windows use the following commands:
-    """ Upgrade to linux """
+  """ Upgrade to linux """
