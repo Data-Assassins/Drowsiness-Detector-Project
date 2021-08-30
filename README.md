@@ -6,7 +6,7 @@
 
 ## Name of project
 
-# Installation
+## Installation
 
 `poetry install`
 
@@ -142,11 +142,11 @@
 
 ## Domain Modeling
 
-![UML](Images/UML.png)
+![UML](images/UML.png)
 
 ## Wireframe
 
-![wireframe](Images/wireframe.jpg)
+![wireframe](images/wireframe.jpg)
 
 ## Instulation
 
@@ -183,7 +183,7 @@ Installing OpenCV
 
      - If you face any issues with the installation of the dependencies such as dlib then you can install it separately using the command.
        `poetry add dlib`
-       - [dlib Instulation](Images/dlib.png)
+       - [dlib Instulation](images/dlib.png)
 
 - For windows use the following commands:
   """ Upgrade to linux """

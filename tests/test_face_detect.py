@@ -1,4 +1,4 @@
-from facedetection.guiTwo import*
+from facedetection.application import*
 import cv2
 import face_recognition
 import pytest
@@ -20,12 +20,12 @@ def one_path():
 
 @pytest.fixture
 def two_paths(one_path):
-    return [one_path, converting_image('fd_database/Tom-Cruise-1.jpg')]
+    return [one_path, converting_image('fd_database/tom_cruise.jpg')]
 
 
 @pytest.fixture
 def diff_image(one_path):
-    return [one_path, converting_image('fd_database/leonardo-dicaprio11.jpg')]
+    return [one_path, converting_image('fd_database/leonardo_dicaprio.jpg')]
 
 # Testing if the findencoding function is successfully encoding the face located in the given image:
 
