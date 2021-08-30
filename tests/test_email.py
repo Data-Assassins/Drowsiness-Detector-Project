@@ -1,4 +1,3 @@
-import pytest
 from facedetection.send_emails import send_email
 
 # test image path
