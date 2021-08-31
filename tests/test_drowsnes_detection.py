@@ -1,4 +1,4 @@
-import pytest 
+# import pytest 
 from facedetection.application import *
 
 def converting_image(path):
@@ -10,14 +10,16 @@ def converting_image(path):
     return encoded
 
 
-@pytest.fixture
-def one_path():
-   return  converting_image('fd_database/tom_test.jpeg')
+# @pytest.fixture
+# def one_path():
+#    return  converting_image('fd_database/tom_test.jpeg')
 
 
 
-def test_findencoding2(one_path):
+def test_findencoding2():
     # Arrange 
+    one_path = converting_image('fd_database/tom_test.jpeg')
+
     img_tom = [cv2.imread('fd_database/tom_test.jpeg')]
     expected = one_path
     # Act 

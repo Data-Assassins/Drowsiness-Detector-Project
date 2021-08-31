@@ -1,7 +1,7 @@
 from facedetection.application import*
 import cv2
 import face_recognition
-import pytest
+# import pytest
 
 
 def converting_image(path):
@@ -13,27 +13,27 @@ def converting_image(path):
     return encoded
 
 
-@pytest.fixture
-def one_path():
-    return converting_image('fd_database/tom_test.jpeg')
+# @pytest.fixture
+# def one_path():
+#     return converting_image('fd_database/tom_test.jpeg')
 
 
-@pytest.fixture
-def two_paths(one_path):
-    return [one_path, converting_image('fd_database/tom_cruise.jpg')]
+# @pytest.fixture
+# def two_paths():
+#     return [converting_image('fd_database/tom_test.jpeg'), converting_image('fd_database/tom_cruise.jpg')]
 
 
-@pytest.fixture
-def diff_image(one_path):
-    return [one_path, converting_image('fd_database/leonardo_dicaprio.jpg')]
+# @pytest.fixture
+# def diff_image(one_path):
+#     return [one_path, converting_image('fd_database/leonardo_dicaprio.jpg')]
 
 # Testing if the findencoding function is successfully encoding the face located in the given image:
 
 
-def test_findencoding(one_path):
+def test_findencoding():
     # Arrange
     img_tom = [cv2.imread('fd_database/tom_test.jpeg')]
-    expected = one_path
+    expected = converting_image('fd_database/tom_test.jpeg')
     # Act
     actual = findEncodings(img_tom)[0]
     # Assert
@@ -42,7 +42,8 @@ def test_findencoding(one_path):
 # Testing if the facecomparison function is successfully compare  the face encodings for the given images:
 
 
-def test_facecomparison_same_path(one_path):
+def test_facecomparison_same_path():
+    one_path=converting_image('fd_database/tom_test.jpeg')
     # Arrange
     expected = face_recognition.compare_faces([one_path], one_path)[0]
     # Act
@@ -51,7 +52,8 @@ def test_facecomparison_same_path(one_path):
     assert expected == actual
 
 
-def test_facecomparison_different_path(two_paths):
+def test_facecomparison_different_path():
+    two_paths=[converting_image('fd_database/tom_test.jpeg'), converting_image('fd_database/tom_cruise.jpg')]
     # Arrange
     expected = face_recognition.compare_faces([two_paths[0]], two_paths[1])[0]
     # Act
@@ -60,7 +62,8 @@ def test_facecomparison_different_path(two_paths):
     assert expected == actual
 
 
-def test_facecomparison_different_images(diff_image):
+def test_facecomparison_different_images():
+    diff_image=[converting_image('fd_database/tom_test.jpeg'), converting_image('fd_database/leonardo_dicaprio.jpg')]
     # Arrange
     expected = face_recognition.compare_faces(
         [diff_image[0]], diff_image[1])[0]
