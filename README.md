@@ -10,10 +10,12 @@
 2. run the following command:
 
    - install all the dependencies packages using the commands:
+
      - install the dependencies using the command:
        `poetry install`
-       `sudo apt-get install python3-pyqt5`
      - It will take some time, it is okay.
+       `sudo apt-get install python3-pyqt5`
+
      - To get the tools that used for making the GUI.
        `sudo apt-get install pyqt5-dev-tools`
        `sudo apt-get install qttools5-dev-tools`

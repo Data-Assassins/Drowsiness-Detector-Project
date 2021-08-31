@@ -24,18 +24,18 @@ def test_findencoding2(one_path):
     actual = findEncodings(img_tom)[0]
     assert expected[0] == actual[0]
     
-# def test_left_eye_recognetion():
-#     detector = dlib.get_frontal_face_detector()
-#     predictor = dlib.shape_predictor("facedetection/68_face_landmarks.dat")
-#     (left_Start, left_End) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
-#     assert  [left_Start, left_End]
+def test_left_eye_recognetion():
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor("facedetection/68_face_landmarks.dat")
+    (left_Start, left_End) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
+    assert  [left_Start, left_End]
 
 
-# def test_right_eye_recognetion():
-#     detector = dlib.get_frontal_face_detector()
-#     predictor = dlib.shape_predictor("facedetection/68_face_landmarks.dat")
-#     (right_Start, right_End) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
-#     assert  [right_Start, right_End]
+def test_right_eye_recognetion():
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor("facedetection/68_face_landmarks.dat")
+    (right_Start, right_End) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
+    assert  [right_Start, right_End]
     
     
     
