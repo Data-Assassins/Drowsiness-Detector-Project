@@ -40,7 +40,7 @@
 
 ## Data Flow
 
-![Dataflow](Images/workingflow.png)
+![Dataflow](images/workingflow.png)
 
 ## Non-Functional Requirements
 

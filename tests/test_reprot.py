@@ -1,4 +1,4 @@
-from facedetection.save_reprot import *
+from facedetection.save_reprot import save_report
 import re
 
 def test_authorized_access_report():

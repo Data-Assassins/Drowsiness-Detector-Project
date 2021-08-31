@@ -1,4 +1,3 @@
-# from facedetection.drowsiness import ALARAM
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt , QThread, pyqtSignal, pyqtSlot
@@ -6,16 +5,13 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget ,QDialog,QTableWidgetItem
 from PyQt5 import QtWidgets ,QtGui
 from PyQt5.uic import loadUi
-from enum import auto
-import re
+# from enum import auto
 from typing import Counter
-from facedetection.send_emails import send_email
 import cv2
 import numpy as np
 import face_recognition
 import os
-from datetime import datetime
-import time
+# from datetime import datetime
 from scipy.spatial import distance as dist
 from imutils import face_utils
 from threading import Thread as audio_thread
@@ -24,6 +20,7 @@ import argparse
 import imutils
 import dlib
 from facedetection.save_reprot import *
+from facedetection.send_emails import send_email
 import csv
 
 
@@ -78,13 +75,13 @@ def eye_aspect_ratio(eye):
 class IntroPage(QDialog):
     def __init__(self):
         super().__init__()
-        loadUi('facedetection/gui/guiIntro.ui', self)
+        loadUi('facedetection/guiIntro.ui', self)
         self.setWindowTitle('Face Detection')
         self.label.setFixedWidth(700)
         self.label.setFixedHeight(800)
         self.setFixedWidth(700)
         self.setFixedHeight(800)
-        self.label.setStyleSheet("border-image: url(facedetection/gui/images/projectposter.png)")
+        self.label.setStyleSheet("border-image: url(facedetection/images/projectposter.png)")
         self.start.clicked.connect(self.start_clicked)
 
     def start_clicked(self):
@@ -99,14 +96,14 @@ class IntroPage(QDialog):
 class homeWindow(QDialog):
     def __init__(self):
         super(homeWindow, self).__init__()
-        loadUi('facedetection/gui/guiHome.ui', self)
+        loadUi('facedetection/guiHome.ui', self)
         self.login.clicked.connect(self.login_clicked)
         self.signup.clicked.connect(self.signup_clicked)
         self.label.setFixedWidth(700)
         self.label.setFixedHeight(800)
         self.setFixedWidth(700)
         self.setFixedHeight(800)
-        self.label.setStyleSheet("border-image: url(facedetection/gui/images/newbackground.png)")
+        self.label.setStyleSheet("border-image: url(facedetection/images/newbackground.png)")
     # login function will link to the login class then we show the login screen
     def login_clicked(self):
         # make object from login class
@@ -128,7 +125,7 @@ class homeWindow(QDialog):
 class loginWindow(QDialog):
     def __init__(self):
         super(loginWindow, self).__init__()
-        loadUi('facedetection/gui/guiLogin.ui', self)
+        loadUi('facedetection/guiLogin.ui', self)
         self.setWindowTitle("Login")
         # self.login.clicked.connect(self.login_clicked)
         self.passwordfield.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -138,7 +135,7 @@ class loginWindow(QDialog):
         self.label.setFixedHeight(800)
         self.setFixedWidth(700)
         self.setFixedHeight(800)
-        self.label.setStyleSheet("border-image: url(facedetection/gui/images/newbackground.png)")
+        self.label.setStyleSheet("border-image: url(facedetection/images/newbackground.png)")
     # to handle the login button inside the login window
     def login_function(self):
         # get the username and password
@@ -172,7 +169,7 @@ class loginWindow(QDialog):
 class signupWindow(QDialog):
     def __init__(self):
         super(signupWindow, self).__init__()
-        loadUi('facedetection/gui/guiSignup.ui', self)
+        loadUi('facedetection/guiSignup.ui', self)
         self.setWindowTitle("Signup")
         self.signup.clicked.connect(self.signup_function)
         self.backbutton.clicked.connect(self.back_button_function)
@@ -180,7 +177,7 @@ class signupWindow(QDialog):
         self.label.setFixedHeight(800)
         self.setFixedWidth(700)
         self.setFixedHeight(800)
-        self.label.setStyleSheet("border-image: url(facedetection/gui/images/newbackground.png)")
+        self.label.setStyleSheet("border-image: url(facedetection/images/newbackground.png)")
     # to handle the signup button inside the signup window
     def signup_function(self):
         # get the username and password
@@ -224,7 +221,7 @@ class signupWindow(QDialog):
 class reportWindow(QDialog):
     def __init__(self):
         super(reportWindow, self).__init__()
-        loadUi('facedetection/gui/guiReport.ui', self)
+        loadUi('facedetection/guiReport.ui', self)
         self.setWindowTitle("Report")
         self.backbutton.clicked.connect(self.back_button_function)
         self.Reporttable.setColumnWidth(0,200)
@@ -234,7 +231,7 @@ class reportWindow(QDialog):
         self.label.setFixedHeight(800)
         self.setFixedWidth(700)
         self.setFixedHeight(800)
-        self.label.setStyleSheet("border-image: url(facedetection/gui/images/newbackground.png)")
+        self.label.setStyleSheet("border-image: url(facedetection/images/newbackground.png)")
         #Row count
         #Column count
         # self.Reporttable.setColumnCount(3)  
@@ -242,7 +239,7 @@ class reportWindow(QDialog):
 
     def read_report(self):
         """read from csv file"""
-        with open('report.csv', 'r') as csvfile:
+        with open('facedetection/report.csv', 'r') as csvfile:
             reader = csv.reader(csvfile)
             # self.Reporttable.setRowCount(len(list(reader))-1)
             self.Reporttable.setRowCount(13)
@@ -266,7 +263,7 @@ class reportWindow(QDialog):
 class mainWindow(QDialog):
     def __init__(self):
         super(mainWindow, self).__init__()
-        loadUi('facedetection/gui/mainWindow.ui', self)
+        loadUi('facedetection/mainWindow.ui', self)
         self.start.clicked.connect(self.start_clicked)
         self.report.clicked.connect(self.report_function) 
         self.backbutton.clicked.connect(self.back_button_function)
@@ -274,7 +271,7 @@ class mainWindow(QDialog):
         self.label.setFixedHeight(800)
         self.setFixedWidth(700)
         self.setFixedHeight(800)
-        self.label.setStyleSheet("border-image: url(facedetection/gui/images/newbackground.png)")
+        self.label.setStyleSheet("border-image: url(facedetection/images/newbackground.png)")
     def start_clicked(self):
         videoScreen = videoWindow()
         widget.addWidget(videoScreen)
@@ -296,7 +293,7 @@ class mainWindow(QDialog):
 class videoWindow(QDialog):
     def __init__(self):
         super(videoWindow, self).__init__()
-        loadUi('facedetection/gui/videoWindow.ui', self)
+        loadUi('facedetection/videoWindow.ui', self)
         self.backbutton.clicked.connect(self.back_button_function)
         self.video = videoLable(self.videoLabel)
         self.video.run_thread(self.edited)
@@ -304,7 +301,7 @@ class videoWindow(QDialog):
         self.label.setFixedHeight(800)
         self.setFixedWidth(700)
         self.setFixedHeight(800)
-        self.label.setStyleSheet("border-image: url(facedetection/gui/images/newbackground.png)")
+        self.label.setStyleSheet("border-image: url(facedetection/images/newbackground.png)")
 
     @pyqtSlot(np.ndarray,name="edited")
     def edited(self,image):

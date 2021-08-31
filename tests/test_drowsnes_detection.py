@@ -1,5 +1,5 @@
 import pytest 
-from facedetection.gui.guiTwo import *
+from facedetection.application import *
 
 def converting_image(path):
       # 1- Loading the image file as numpy array 
